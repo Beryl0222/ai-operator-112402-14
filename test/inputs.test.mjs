@@ -1,17 +1,17 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
+import { albumScore, albumObjective } from '../inputs/album-inputs.mjs';
 
-const d = JSON.parse(readFileSync(new URL('../inputs/session.json', import.meta.url), 'utf8'));
-
-test("每笔特征片可组齐并有有效标签", () => {
-  assert.ok(d.strokes.every(x=>x.chunks.flatMap(c=>c[1]).length===d.featureCount&&d.classes.includes(x.label)));
-});
-
-test("同档近共线笔迹含不同标签", () => {
-  assert.ok(d.strokes[0].writer===d.strokes[1].writer&&d.strokes[0].label!==d.strokes[1].label&&Math.abs(d.strokes[0].chunks[0][1][0]-d.strokes[1].chunks[0][1][0])<0.01);
-});
-
-test("样本明确区分未观测和零", () => {
-  assert.ok(d.strokes[2].chunks[1][1].includes(null)&&d.strokes[0].chunks[0][1].includes(0));
+const data=JSON.parse(readFileSync(new URL('../inputs/album-inputs.json',import.meta.url),'utf8'));
+test('相册训练目标和分组资料的格式与关联', () => {
+  const a = albumScore(51), b = albumScore(190);
+  assert.equal(a.canonical,b.canonical);
+  assert.notEqual(a.device,b.device);
+  assert.ok(data.groupQuota.reduce((a,q)=>a+q[1],0)<=data.selected);
+  assert.ok(data.groupQuota.reduce((a,q)=>a+q[2],0)>=data.selected);
+  assert.ok(data.scratchBytes<data.n**2*4);
+  assert.ok(data.assignments.some(a=>a[0]==='unknown'));
+  assert.ok(albumScore(142).s>2.9);
+  assert.equal(albumScore(142).group,"unknown");
 });

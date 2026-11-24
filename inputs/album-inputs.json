@@ -1,0 +1,120 @@
+{
+  "n": 16384,
+  "temperature": 0.08,
+  "rankTol": 6e-06,
+  "scratchBytes": 524288,
+  "selected": 80,
+  "groupQuota": [
+    [
+      "trip",
+      12,
+      23
+    ],
+    [
+      "portrait",
+      8,
+      20
+    ],
+    [
+      "school",
+      10,
+      16
+    ],
+    [
+      "other",
+      0,
+      40
+    ]
+  ],
+  "duplicates": [
+    [
+      51,
+      190
+    ],
+    [
+      145,
+      165
+    ],
+    [
+      441,
+      480
+    ]
+  ],
+  "assignments": [
+    [
+      "unknown",
+      142
+    ],
+    [
+      "confirm",
+      142,
+      "trip"
+    ],
+    [
+      "correct",
+      190,
+      "school"
+    ]
+  ],
+  "phases": [
+    [
+      "sort",
+      "import10"
+    ],
+    [
+      "view",
+      0,
+      80
+    ],
+    [
+      "grad",
+      "import10"
+    ],
+    [
+      "assign",
+      142,
+      "trip"
+    ],
+    [
+      "correct",
+      190,
+      "school"
+    ],
+    [
+      "view",
+      0,
+      80
+    ],
+    [
+      "grad",
+      "import11"
+    ]
+  ],
+  "rankSlack": 46,
+  "groupOptions": [
+    [
+      142,
+      [
+        "trip",
+        "portrait"
+      ]
+    ],
+    [
+      328,
+      [
+        "trip",
+        "other"
+      ]
+    ]
+  ],
+  "manualScores": [
+    [
+      142,
+      2.9375
+    ],
+    [
+      328,
+      2.90625
+    ]
+  ]
+}

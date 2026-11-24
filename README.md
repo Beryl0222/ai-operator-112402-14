@@ -1,11 +1,11 @@
-# 笔迹个性化的分组 Gram 积累与权重交接
+# 端侧学习排序的分组可微排列与平分裁定
 
-项目资料使用可独立读写的 JSON。Node.js 22.23.4 下运行 `npm ci --offline` 准备环境，然后运行 `npm run inspect` 检查合成数据字段，运行 `npm test` 校验样本引用及格式。
+这里的相册训练目标和分组资料是用于设备联调的合成资料。使用 Node.js 22。运行 `npm ci --offline` 核对依赖锁，`npm run inspect` 查看资料字段，`npm test` 检查资料格式及相互引用。检视脚本只读取元数据。
 
-## 输入契约
+## 数据格式
 
-每笔属于 (writer, calibration, stroke)，revision 增大时替换标签或撤下。特征分片组齐后按校准规则 z=(x-center)/scale。未到、明确未观测、测得为零分别登记，明确未观测用包的 fill 规则。目标准则为 ||XW-Y||²+λ||W||²，标签为固定字符表的 one-hot。消费端核对同 writer、校准和字符表。允许使用累加块的较低精度，但以当前有效资料形成的参考正规方程残差逐列比较相对容差。预算计运行时所持统计和解的临时数据。 每个类别的正规方程为 AW=B，A=XᵀX+λI，B=XᵀY。残差口径为 max(abs(AW-B))/max(1,max(abs(B)))，逐列比较。
+`referenceRanks` 是从 1 到 n 的排列向量。软名次是把 (n+1)−s/temperature 欧氏投影到 permutahedron（所有 referenceRanks 排列的凸包），数值误差 rankTol。上游给向各物理照片的 dLoss/dRank。处在投影分块相邻分界而微分不唯一时，可给实际使用单侧方向及不可微标识，应与报告的活动面相容。排序视图在 packages 中以 canonical 标识进行归属和重拍折叠。groupQuota 对首窗声明每个 true group 的 min/max，候选证据有 confirmed/unknown 归属。离散整理允许多个同分排列，算子交付时按在约束下 score 总和最大，平局按 canonical 升序对照。若最优集会随未知归属变化，不签正式窗口。scratchBytes 含全部目标端暂存，源分数和已交付输出除外。 两个视图合并后的训练分数按其公开权重加权平均，权重正且不靠视图到达顺序。真实样本顺序在 soft ranks 中仅用于落回相同 canonical。近边界的软名次随温度的变化和首窗提交规则分别报告，首窗配额使用所有相容的归属，发布候选必须在其中每一种归属下还满足规则。 参与首窗的物理照片只在其软名次与窗口槽号相差至多 rankSlack 时允许占该槽。若对不同尚有效的组归属，训练者可用照片集合不同，发布要看所有可能集合的槽位与场景约束。不能只按静态 score 最大权重填窗，已知不可行时单独报告是软名次范围还是组额不相容。 groupOptions 给尚不能确定的非空真实组集合，归属选项独立，规范照片只在组资格所需来源都有效时参与训练。组确认后用当前可用集合重新解释相同槽号。
 
-## 资料读取
+## 取数
 
-样本位于 `inputs/session.json`，其中 `events` 是按到达顺序记下的操作，编号从零开始。chunk 指笔迹及其分片下标；label 以笔迹 ID、修订、字符更正，withdraw 以 ID 与修订撤回，publish 决定书写人和校准版本的交接。
+`inputs/album-inputs.json` 保存标定、规格和调用记录。记录中的范围除明确说明外从零开始，使用半开区间。批量数组按调用记录列出的顺序交付。albumScore(index) 读视图分数、权重和照片身份，albumObjective(canonical) 读物理照片上游权重。
