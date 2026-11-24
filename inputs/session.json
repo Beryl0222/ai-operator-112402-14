@@ -1,0 +1,168 @@
+{
+  "featureCount": 4,
+  "classes": [
+    "丨",
+    "一"
+  ],
+  "calibration": {
+    "c1": {
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "fill": 0
+    },
+    "c2": {
+      "center": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "fill": 0
+    }
+  },
+  "strokes": [
+    {
+      "id": "x",
+      "writer": "A",
+      "cal": "c1",
+      "chunks": [
+        [
+          0,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          2,
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "label": "丨"
+    },
+    {
+      "id": "y",
+      "writer": "A",
+      "cal": "c1",
+      "chunks": [
+        [
+          0,
+          [
+            1.001,
+            0.0001
+          ]
+        ],
+        [
+          2,
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "label": "一"
+    },
+    {
+      "id": "z",
+      "writer": "B",
+      "cal": "c2",
+      "chunks": [
+        [
+          0,
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          2,
+          [
+            null,
+            1
+          ]
+        ]
+      ],
+      "label": "一"
+    }
+  ],
+  "events": [
+    [
+      "chunk",
+      "x",
+      0
+    ],
+    [
+      "chunk",
+      "y",
+      0
+    ],
+    [
+      "chunk",
+      "y",
+      1
+    ],
+    [
+      "publish",
+      "A",
+      "c1"
+    ],
+    [
+      "chunk",
+      "x",
+      1
+    ],
+    [
+      "publish",
+      "A",
+      "c1"
+    ],
+    [
+      "label",
+      "x",
+      2,
+      "一"
+    ],
+    [
+      "withdraw",
+      "y",
+      2
+    ],
+    [
+      "chunk",
+      "z",
+      0
+    ],
+    [
+      "chunk",
+      "z",
+      1
+    ],
+    [
+      "publish",
+      "B",
+      "c2"
+    ]
+  ],
+  "lambda": 1e-05,
+  "residualTolerance": 5e-06,
+  "scratchBytes": 2048
+}
